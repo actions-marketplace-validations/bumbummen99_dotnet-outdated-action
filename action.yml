@@ -1,5 +1,5 @@
 # action.yml
-name: 'Dotnet Outdated - Install and Update'
+name: 'Dotnet Outdated Extended'
 description: 'This action installs the dotnet outdated tool and then attempts to update any NuGet packages that are available.'
 branding:
   icon: 'arrow-down-circle'  
