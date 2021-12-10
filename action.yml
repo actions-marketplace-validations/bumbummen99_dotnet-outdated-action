@@ -45,12 +45,10 @@ runs:
         for i in $(echo ${{ inputs.excludes }} | sed "s/,/ /g"); do
             COMMAND_EXCLUDES+="--exclude $i "
         done
-        
-        $COMMAND_EXTRA=${{ inputs.extra }}
 
-        echo "dotnet outdated $COMMAND_EXTRA --upgrade $COMMAND_INCLUDES $COMMAND_EXCLUDES"
+        echo "dotnet outdated ${{ inputs.location }} ${{ inputs.extra }} --upgrade $COMMAND_INCLUDES $COMMAND_EXCLUDES"
 
-        OUTPUT=`dotnet outdated $COMMAND_EXTRA --upgrade $COMMAND_INCLUDES $COMMAND_EXCLUDES`
+        OUTPUT=`dotnet outdated ${{ inputs.location }} ${{ inputs.extra }} --upgrade $COMMAND_INCLUDES $COMMAND_EXCLUDES`
         echo "$OUTPUT"
 
         if [[ $OUTPUT =~ "No outdated dependencies" ]]; then
