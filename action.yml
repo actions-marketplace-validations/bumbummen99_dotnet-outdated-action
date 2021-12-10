@@ -20,6 +20,11 @@ inputs:
     default: ''
     required: false
     type: string
+  extra:
+    description: 'Add your own parameters to the command'
+    default: ''
+    required: false
+    type: string
 outputs:
   updated: # id of output
     description: 'Were updates required and were they successful?'
@@ -40,10 +45,12 @@ runs:
         for i in $(echo ${{ inputs.excludes }} | sed "s/,/ /g"); do
             COMMAND_EXCLUDES+="--exclude $i "
         done
+        
+        $COMMAND_EXTRA=${{ inputs.extra }}
 
-        echo "dotnet outdated --upgrade $COMMAND_INCLUDES $COMMAND_EXCLUDES"
+        echo "dotnet outdated $COMMAND_EXTRA --upgrade $COMMAND_INCLUDES $COMMAND_EXCLUDES"
 
-        OUTPUT=`dotnet outdated --upgrade $COMMAND_INCLUDES $COMMAND_EXCLUDES`
+        OUTPUT=`dotnet outdated $COMMAND_EXTRA --upgrade $COMMAND_INCLUDES $COMMAND_EXCLUDES`
         echo "$OUTPUT"
 
         if [[ $OUTPUT =~ "No outdated dependencies" ]]; then
